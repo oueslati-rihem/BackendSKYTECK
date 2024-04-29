@@ -63,4 +63,11 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "users")
     private Set<Room> joinedRooms = new HashSet<>();
 
+
+    @OneToMany(mappedBy ="user")
+    @JsonIgnore
+    Set <Cours> cours ;
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+    private Set<Tentative> tentatives;
 }
