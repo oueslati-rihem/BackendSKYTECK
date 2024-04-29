@@ -30,4 +30,6 @@ public class ProjectPiTwoApplication {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
+
+    //commentaire
 }
