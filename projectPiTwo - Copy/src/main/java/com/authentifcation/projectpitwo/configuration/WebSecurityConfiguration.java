@@ -23,6 +23,7 @@
  @EnableWebSecurity
  @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration  {
+
   @Autowired
   private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 

@@ -19,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/room")
 @AllArgsConstructor
+@CrossOrigin()
+
 public class RoomController {
 
     IRoomService iRoomService;

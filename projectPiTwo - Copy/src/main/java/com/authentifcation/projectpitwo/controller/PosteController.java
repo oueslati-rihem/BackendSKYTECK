@@ -17,6 +17,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/poste")
 @AllArgsConstructor
+@CrossOrigin()
+
 public class PosteController {
     IPosteService IposteService ;
     PosteRepository posteRepository;
