@@ -56,4 +56,11 @@ public class User implements Serializable {
     @ToString.Exclude
     @JsonIgnore
     List<Offer> Offers;
+    @JsonIgnore
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private Set<Room> createdRooms = new HashSet<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users")
+    private Set<Room> joinedRooms = new HashSet<>();
+
 }

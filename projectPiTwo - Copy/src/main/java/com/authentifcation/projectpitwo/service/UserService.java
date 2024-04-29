@@ -97,16 +97,16 @@ public class UserService implements UserInterface {
         adminUser.setRole(adminRoles);
         userDao.save(adminUser);
 
-     //  User user = new User();
-       // user.setId(2);
-        //user.setUserName("rihem123");
-        //user.setUserPassword(getEncodedPassword("rihem@123"));
-        //user.setUserFirstName("rihem");
-        //user.setUserLastName("rihem");
-        //Set<Role> userRoles = new HashSet<>();
-        //userRoles.add(userRole);
-        //user.setRole(userRoles);
-       //userDao.save(user);
+       User user = new User();
+        user.setId(3);
+        user.setUserName("rihem123");
+        user.setUserPassword(getEncodedPassword("rihem@123"));
+        user.setUserFirstName("rihem");
+        user.setUserLastName("rihem");
+        Set<Role> userRoles = new HashSet<>();
+        userRoles.add(userRole);
+        user.setRole(userRoles);
+       userDao.save(user);
     }
 
    // public User registerNewUser(User user) {
