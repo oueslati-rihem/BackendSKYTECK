@@ -2,10 +2,12 @@ package com.authentifcation.projectpitwo.entities;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 
+import java.io.Serializable;
 import java.util.*;
 
 
@@ -15,7 +17,7 @@ import java.util.Set;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User implements Serializable {
     @GeneratedValue
     @Id
     private Integer id ;
@@ -50,5 +52,8 @@ public class User {
     @Column(name = "activation_token")
     private String activationToken;
 
-
+    @OneToMany(mappedBy = "tuteur")
+    @ToString.Exclude
+    @JsonIgnore
+    List<Offer> Offers;
 }

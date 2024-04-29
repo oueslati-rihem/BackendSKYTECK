@@ -10,6 +10,7 @@ import com.authentifcation.projectpitwo.entities.Token;
 import com.authentifcation.projectpitwo.entities.User;
 import com.authentifcation.projectpitwo.repository.TokenRepository;
 import com.authentifcation.projectpitwo.repository.UserRepository;
+import com.authentifcation.projectpitwo.serviceInterface.UserInterface;
 import com.authentifcation.projectpitwo.util.EmailTemplateName;
 import com.authentifcation.projectpitwo.util.EmailUtil;
 import com.authentifcation.projectpitwo.util.JwtUtil;
@@ -42,7 +43,7 @@ import java.util.*;
 
 @Service
 
-public class UserService  {
+public class UserService implements UserInterface {
 
     @Autowired
     private UserDao userDao;
@@ -416,7 +417,12 @@ public ResponseEntity<?> registerNewUser(User user, String roleName) {
     }
 
 
+    @Override
+    public User getUserById(Integer id) {
 
+            return userRepository.findById(id).orElse(null);
+
+    }
 }
 
 
