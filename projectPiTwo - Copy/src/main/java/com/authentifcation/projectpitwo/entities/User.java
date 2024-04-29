@@ -2,6 +2,7 @@ package com.authentifcation.projectpitwo.entities;
 
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -49,6 +50,11 @@ public class User {
     private Set<Role> role;
     @Column(name = "activation_token")
     private String activationToken;
-
+    @JsonIgnore
+    @OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+    private Set<Room> createdRooms = new HashSet<>();
+    @JsonIgnore
+    @ManyToMany(mappedBy = "users")
+    private Set<Room> joinedRooms = new HashSet<>();
 
 }
