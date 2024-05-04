@@ -15,7 +15,7 @@ public class ProjectPiTwoApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProjectPiTwoApplication.class, args);
     }
-    @Bean
+  /*  @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
         corsConfiguration.setAllowCredentials(true);
@@ -30,6 +30,6 @@ public class ProjectPiTwoApplication {
         urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
         return new CorsFilter(urlBasedCorsConfigurationSource);
     }
-
+*/
     //commentaire
 }

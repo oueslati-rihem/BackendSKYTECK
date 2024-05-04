@@ -97,16 +97,16 @@ public class UserService implements UserInterface {
         adminUser.setRole(adminRoles);
         userDao.save(adminUser);
 
-       User user = new User();
+       /*User user = new User();
         user.setId(3);
         user.setUserName("rihem123");
-        user.setUserPassword(getEncodedPassword("rihem@123"));
+        user.setUserPassword(getEncodedPassword("rihem123"));
         user.setUserFirstName("rihem");
         user.setUserLastName("rihem");
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
         user.setRole(userRoles);
-       userDao.save(user);
+       userDao.save(user);*/
     }
 
    // public User registerNewUser(User user) {
@@ -122,7 +122,7 @@ public ResponseEntity<?> registerNewUser(User user, String roleName) {
     try {
         // Check if the username already exists
         if (userDao.findByUserName(user.getUserName()).isPresent()) {
-            throw new RuntimeException("Username already exists");
+            return new ResponseEntity<>("Username already exist", HttpStatus.BAD_REQUEST);
         }
 
         // Retrieve the role based on the selected roleName
@@ -143,12 +143,14 @@ public ResponseEntity<?> registerNewUser(User user, String roleName) {
         // Save the user
         User savedUser = userDao.save(user);
 
+
         // Send email with user credentials
         //sendVerificationEmail(savedUser);
         sendValidationEmail(savedUser);
 
         // Return a success response
         return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+
     } catch (Exception ex) {
 
         // Return an error response

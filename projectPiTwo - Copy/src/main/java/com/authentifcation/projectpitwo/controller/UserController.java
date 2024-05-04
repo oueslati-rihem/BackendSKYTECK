@@ -32,8 +32,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.imageio.ImageIO;
 
-//@CrossOrigin(allowedHeaders = "*", origins = "*")
-
 @RestController
 public class UserController {
 
@@ -59,6 +57,7 @@ public class UserController {
     public User registerUser(@RequestBody User user ) {
         return userService.save(user);
     }
+    @PreAuthorize("hasRole('Admin')")
     @GetMapping("/bannedUserStatistics")
     public ResponseEntity<?> getBannedUserStatistics() {
         long bannedUserCount = userRepository.countByBanned(true);
@@ -68,39 +67,6 @@ public class UserController {
 
         return ResponseEntity.ok(statistics);
     }
-
- /*  @PostMapping(value = {"/registerNewUser"}, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public User registerNewUser(
-            @RequestPart("userData") Map<String, String> userData,
-            @RequestPart("cvFile") MultipartFile cvFile
-           // @RequestPart("imageFile") MultipartFile imageFile
-    ) {
-        String roleName = userData.get("role"); // Assuming "role" is the key for role information
-        User user = new User();
-        user.setUserName(userData.get("userName"));
-        user.setUserFirstName(userData.get("userFirstName"));
-        user.setUserLastName(userData.get("userLastName"));
-        user.setUserPassword(userData.get("userPassword"));
-        user.setContactNumber(userData.get("contactNumber"));
-
-        // Assuming the CV and image paths are provided in the userData map
-         String cvPath = userData.get("cvPath");
-        // String imagePath = userData.get("imagePath");
-         user.setCv(cvPath);
-        // user.setImage(imagePath);
-
-        // Set CV and image from uploaded files
-        user.setCv(cvFile.getOriginalFilename());
-     //   user.setImage(imageFile.getOriginalFilename());
-
-        // Save CV and image files to storage
-        // cvFile.transferTo(new File("path/to/save/cv"));
-        // imageFile.transferTo(new File("path/to/save/image"));
-
-        return userService.registerNewUser(user, roleName);
-    }
-*/
-
 
 
 
@@ -149,18 +115,18 @@ public class UserController {
     public User updateStudent(@RequestBody User student) {
         return  userService.updateStudent(student);
     }
-
+    @PreAuthorize("hasRole('Admin') or hasRole('User')  or hasRole('Tutor')")
     @GetMapping("/userDetail")
-
     public ResponseEntity<User> getUserById() {
         try {
             User user = userService.getUserById();
             return ResponseEntity.ok(user);
         } catch (NoSuchElementException e) {
-
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
+    @PreAuthorize("hasRole('Admin')")
     @GetMapping("/getUsers")
     public List<User> getUsers(){
         return userService.getUsers();
@@ -195,6 +161,7 @@ public class UserController {
     ) throws MessagingException {
         userService.activateAccount(token);
     }
+    @PreAuthorize("hasRole('Admin')")
     @GetMapping("/userRoleStatistics")
     public ResponseEntity<?> getUserRoleStatistics() {
         Role tutorRole = roleDao.findByroleName("Tutor"); // Assuming you have a method to find a Role by name

@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
@@ -24,6 +25,7 @@ import static org.springframework.mail.javamail.MimeMessageHelper.MULTIPART_MODE
 @Slf4j
 @RequiredArgsConstructor
 @Service
+@CrossOrigin
 public class EmailUtil {
     @Autowired
     private JavaMailSender emailSender;
@@ -68,7 +70,7 @@ public class EmailUtil {
         helper.setSubject(subject);
 
         // Construct activation link with recipient's email
-        String activationLink = "<a href=\"http://localhost:8089/activate/" + to + "\">Click here to Activate your account</a>";
+        String activationLink = "<a href=\"http://localhost:8089/SKyTeck/activate/" + to + "\">Click here to Activate your account</a>";
 
         // Construct HTML message with activation link
         String htmlMSG = "<p><b>Activate Your account</b></p>"
