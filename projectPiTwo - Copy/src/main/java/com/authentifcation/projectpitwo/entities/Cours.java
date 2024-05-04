@@ -24,7 +24,7 @@ public class Cours implements Serializable {
 
     @ManyToOne
     User user;
-    @JsonIgnore
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy="cours")
     private Set<Quiz> Quizs;
 

@@ -96,7 +96,7 @@ public class UserService implements UserInterface {
         adminRoles.add(adminRole);
         adminUser.setRole(adminRoles);
         userDao.save(adminUser);
-
+/*
        User user = new User();
         user.setId(3);
         user.setUserName("rihem123");
@@ -106,7 +106,7 @@ public class UserService implements UserInterface {
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(userRole);
         user.setRole(userRoles);
-       userDao.save(user);
+       userDao.save(user);*/
     }
 
    // public User registerNewUser(User user) {
