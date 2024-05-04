@@ -68,6 +68,12 @@ public class ParticipationService implements ParticipationInterface {
     }
 
     @Override
+    public String sendmailtofinich(Participation participation) {
+        return  "success";
+
+    }
+
+    @Override
     public void AccepterParticipation(Long participationId) {
         Participation participation = participationRepo.findById(participationId).orElseThrow(() -> new IllegalArgumentException("Invalid participation Id"));
 

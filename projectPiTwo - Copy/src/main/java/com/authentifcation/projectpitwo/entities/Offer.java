@@ -27,9 +27,11 @@ public class Offer implements Serializable {
     @Column(name = "image_url")
     String imageUrl;
 
-    @Transient
-    MultipartFile imageFile;
-
+    // Champ pour stocker les URLs des PDF
+    @ElementCollection
+    @CollectionTable(name = "pdf_urls", joinColumns = @JoinColumn(name = "offer_id"))
+    @Column(name = "pdf_url")
+    List<String> pdfUrls;
 
 
     @OneToMany(mappedBy = "offer")

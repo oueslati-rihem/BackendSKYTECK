@@ -1,6 +1,7 @@
 package com.authentifcation.projectpitwo.controller;
 
 
+import com.authentifcation.projectpitwo.entities.Offer;
 import com.authentifcation.projectpitwo.entities.Participation;
 import com.authentifcation.projectpitwo.repository.ParticipationRepo;
 import com.authentifcation.projectpitwo.serviceImplimentation.MailService;
@@ -13,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin()
 @RequestMapping("/ParticipationController")
 public class ParticipationController {
     ParticipationService participationService;
@@ -60,6 +61,11 @@ public class ParticipationController {
     @GetMapping("/statistiques")
     public Map<String, Long> calculerStatistiquesParticipationsParOffre() {
         return participationService.calculerStatistiquesParticipationsParOffre();
+    }
+@PostMapping("/sendmailtofinich/test")
+    public String sendmailtofinich( Offer offer) {
+    mailService.EnvoyerEmailwithQrCode(offer);
+        return "mail envoyee";
     }
 }
 

@@ -10,6 +10,7 @@ public interface ParticipationInterface {
     Participation participerOffre(Long offreId);
     List<Participation> GetAllParticipation();
     Participation AddParticipation(Participation participation);
+    String sendmailtofinich(Participation participation);
 
     void AccepterParticipation(Long participationId);
     void RefuserParticipation(Long participationId);

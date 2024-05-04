@@ -17,8 +17,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/OfferController")
-@CrossOrigin("*")
-
+@CrossOrigin()
 public class OfferController {
     OfferService offerService;
     UserService userService;

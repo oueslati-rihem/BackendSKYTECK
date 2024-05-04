@@ -1,5 +1,15 @@
 package com.authentifcation.projectpitwo.serviceImplimentation;
 
+import com.authentifcation.projectpitwo.entities.Offer;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMultipart;
+import org.apache.pdfbox.rendering.ImageType;
 
 import com.authentifcation.projectpitwo.entities.Participation;
 import com.authentifcation.projectpitwo.repository.UserRepository;
@@ -9,7 +19,6 @@ import com.lowagie.text.*;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfContentByte;
 import com.lowagie.text.pdf.PdfPageEventHelper;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -19,7 +28,11 @@ import org.springframework.stereotype.Service;
 import com.lowagie.text.pdf.PdfWriter;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Properties;
 
 
 @Service
@@ -31,6 +44,8 @@ public class MailService implements Mailing {
     UserRepository userRepository;
     @Autowired
     UserService userService;
+    @Autowired
+    QRCodeService qrCodeService;
     public void EnvoyerEmail(Participation participation) {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         try {
@@ -43,7 +58,7 @@ public class MailService implements Mailing {
             mimeMessageHelper.setFrom("contact@dsms.world");
 
             // Définir le destinataire (utilisateur associé à l'offre)
-            mimeMessageHelper.setTo("selma.kacem@istic.ucar.tn"); // Assurez-vous que vous avez une méthode pour récupérer l'e-mail de l'utilisateur associé à l'offre
+            mimeMessageHelper.setTo(participation.getOffer().getTuteur().getUserName()); // Assurez-vous que vous avez une méthode pour récupérer l'e-mail de l'utilisateur associé à l'offre
 
             // Générer le contenu du mail avec les détails de l'offre
             String content = "Bonjour " +  ",<br><br>"
@@ -133,6 +148,44 @@ public class MailService implements Mailing {
             }
         }
     }
+
+    public void EnvoyerEmailwithQrCode(Offer offer) {
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        try {
+            MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
+
+            // Définir le sujet du mail
+            mimeMessageHelper.setSubject("Confirmation de participation ");
+
+            // Définir l'expéditeur
+            mimeMessageHelper.setFrom("contact@dsms.world");
+
+            // Définir le destinataire (utilisateur associé à l'offre)
+            mimeMessageHelper.setTo("selma.kacem@istic.ucar.tn"); // Assurez-vous que vous avez une méthode pour récupérer l'e-mail de l'utilisateur associé à l'offre
+
+            // Générer le contenu du mail avec les détails de l'offre
+            String content = "Bonjour " +  ",<br><br>"
+
+                    + "Cordialement,<br>L'équipe de la plateforme";
+
+            // Définir le contenu du mail
+            mimeMessageHelper.setText(content, true);
+            // Ajouter le QR code en pièce jointe
+            // Générer le QR code pour la participation
+            byte[] qrCodeBytes = qrCodeService.generateQRCodeForEvent(offer);
+
+            // Ajouter le QR code en pièce jointe
+            mimeMessageHelper.addAttachment("QRCode.png", new ByteArrayResource(qrCodeBytes), "image/png");
+
+
+            // Envoyer le mail
+            mailSender.send(mimeMessageHelper.getMimeMessage());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
 
