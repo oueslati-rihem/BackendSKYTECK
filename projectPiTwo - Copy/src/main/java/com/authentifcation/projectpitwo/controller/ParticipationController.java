@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin
 @RequestMapping("/ParticipationController")
 public class ParticipationController {
     ParticipationService participationService;

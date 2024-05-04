@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -107,5 +108,9 @@ public Object getEventById(@PathVariable("numEvent") Long numEvent) {
     public ResponseEntity<Long> countEvents() {
         long count = eventInterface.countEvents();
         return ResponseEntity.ok(count);
+    }
+    @GetMapping("/events/numberOfEventsPerMonth")
+    public Map<String, Integer> getNumberOfEventsPerMonth() {
+        return eventInterface.getNumberOfEventsPerMonth();
     }
 }

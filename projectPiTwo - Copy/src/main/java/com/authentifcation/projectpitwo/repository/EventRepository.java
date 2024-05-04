@@ -19,7 +19,13 @@ public interface EventRepository extends JpaRepository<Event,Long> {
 
     @Query("SELECT e, COUNT(p) " +
             "FROM Event e " +
-            "LEFT JOIN Participation2 p ON e.numEvent = p.event.numEvent " +
+            "LEFT JOIN Participationevent p ON e.numEvent = p.event.numEvent " +
             "GROUP BY e")
     List<Object[]> calculateEventParticipationStatistics();
+
+    @Query("SELECT MONTH(e.date) as month, COUNT(e) as count " +
+            "FROM Event e " +
+            "GROUP BY MONTH(e.date)")
+    List<Object[]> countEventsPerMonth();
+    //coment
 }

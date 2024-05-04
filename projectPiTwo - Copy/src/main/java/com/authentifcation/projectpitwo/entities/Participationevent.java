@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Setter
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Participation2 implements Serializable {
+public class Participationevent implements Serializable {
     @Id
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)

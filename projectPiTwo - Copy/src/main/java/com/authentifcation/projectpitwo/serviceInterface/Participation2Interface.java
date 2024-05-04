@@ -1,7 +1,7 @@
 package com.authentifcation.projectpitwo.serviceInterface;
 
 import com.authentifcation.projectpitwo.entities.Event;
-import com.authentifcation.projectpitwo.entities.Participation2;
+import com.authentifcation.projectpitwo.entities.Participationevent;
 import jakarta.mail.MessagingException;
 
 import java.util.List;
@@ -10,13 +10,13 @@ public interface Participation2Interface {
 
     void acceptParticipation(Long IdPart) throws MessagingException;
     void rejectParticipation(Long IdPart);
-    Participation2 archiveParticipation(Long IdPart);
+    Participationevent archiveParticipation(Long IdPart);
 
-    List<Participation2> getParticipation();
+    List<Participationevent> getParticipation();
 
-    Participation2 participate(Integer Id, Long numEvent) ;
+    Participationevent participate(Integer Id, Long numEvent) ;
     boolean isEventFull(Event event);
-    List<Participation2> getParticipationsByUserId(Integer Id);
+    List<Participationevent> getParticipationsByUserId(Integer Id);
 
 
 

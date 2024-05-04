@@ -1,9 +1,8 @@
 package com.authentifcation.projectpitwo.controller;
 
 
-import com.authentifcation.projectpitwo.entities.Participation2;
+import com.authentifcation.projectpitwo.entities.Participationevent;
 import com.authentifcation.projectpitwo.serviceInterface.Participation2Interface;
-import com.authentifcation.projectpitwo.serviceInterface.ParticipationInterface;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class Participation2Controller {
     @PostMapping("/{NumEvent}/{Id}")
     public ResponseEntity<?> participate(@PathVariable Integer Id, @PathVariable Long NumEvent) {
         try {
-            Participation2 participation = participationInterface.participate(Id, NumEvent);
+            Participationevent participation = participationInterface.participate(Id, NumEvent);
             return ResponseEntity.status(HttpStatus.CREATED).body(participation);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -53,7 +52,7 @@ public class Participation2Controller {
         @PostMapping("/{IdPart}/archive")
         public ResponseEntity<?> archiveParticipation (@PathVariable Long IdPart){
             try {
-                Participation2 participation = participationInterface.archiveParticipation(IdPart);
+                Participationevent participation = participationInterface.archiveParticipation(IdPart);
                 return ResponseEntity.ok("Participation with ID " + IdPart + " archived successfully.");
             } catch (IllegalArgumentException e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -62,14 +61,14 @@ public class Participation2Controller {
         }
 
     @GetMapping("/participation")
-    public ResponseEntity<List<Participation2>> getParticipation() {
-        List<Participation2> participation = participationInterface.getParticipation();
+    public ResponseEntity<List<Participationevent>> getParticipation() {
+        List<Participationevent> participation = participationInterface.getParticipation();
         return ResponseEntity.ok(participation);
     }
 
     @GetMapping("/user/{Id}")
-    public ResponseEntity<List<Participation2>> getParticipationByUserId(@PathVariable Integer Id) {
-        List<Participation2> participation = participationInterface.getParticipationsByUserId(Id);
+    public ResponseEntity<List<Participationevent>> getParticipationByUserId(@PathVariable Integer Id) {
+        List<Participationevent> participation = participationInterface.getParticipationsByUserId(Id);
         return ResponseEntity.ok(participation);
     }
 

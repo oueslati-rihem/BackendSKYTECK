@@ -2,14 +2,13 @@ package com.authentifcation.projectpitwo.serviceImplimentation;
 
 
 import com.authentifcation.projectpitwo.entities.Event;
-import com.authentifcation.projectpitwo.entities.Participation2;
+import com.authentifcation.projectpitwo.entities.Participationevent;
 import com.authentifcation.projectpitwo.entities.ParticipationStatus;
 import com.authentifcation.projectpitwo.entities.User;
 import com.authentifcation.projectpitwo.repository.EventRepository;
 import com.authentifcation.projectpitwo.repository.Participation2Repository;
 import com.authentifcation.projectpitwo.repository.UserRepository;
 import com.authentifcation.projectpitwo.serviceInterface.Participation2Interface;
-import com.authentifcation.projectpitwo.util.EmailUtil;
 import com.authentifcation.projectpitwo.util.EmailUtil2;
 import jakarta.mail.MessagingException;
 import lombok.AllArgsConstructor;
@@ -28,7 +27,7 @@ public class Participation2Impl implements Participation2Interface {
     @Autowired
     EmailUtil2 emailUtil;
     @Override
-    public Participation2 participate(Integer userId, Long eventId) {
+    public Participationevent participate(Integer userId, Long eventId) {
         // Find the event
         Event event = repo.findById(eventId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid event Id"));
@@ -48,29 +47,29 @@ public class Participation2Impl implements Participation2Interface {
         }
 
         // Create participation record
-        Participation2 participation2 = new Participation2();
-        participation2.setEvent(event);
-        participation2.setUser(user);
-        participation2.setStatus(ParticipationStatus.WAITING); // By default, participation is waiting
+        Participationevent participationevent = new Participationevent();
+        participationevent.setEvent(event);
+        participationevent.setUser(user);
+        participationevent.setStatus(ParticipationStatus.WAITING); // By default, participation is waiting
 
-        return repopart.save(participation2);
+        return repopart.save(participationevent);
     }
 
     private boolean hasUserParticipatedInEvent(User user, Event event) {
         // Check if the user has already participated in the event
-        List<Participation2> participation2s = repopart.findByUserAndEvent(user, event);
-        return !participation2s.isEmpty();
+        List<Participationevent> participationevents = repopart.findByUserAndEvent(user, event);
+        return !participationevents.isEmpty();
     }
 
 
     @Override
     public boolean isEventFull(Event event) {
-        List<Participation2> participation2 = repopart.findByEvent(event);
-        return participation2.size() >= event.getNombreDePlace();
+        List<Participationevent> participationevent = repopart.findByEvent(event);
+        return participationevent.size() >= event.getNombreDePlace();
     }
 
     @Override
-    public List<Participation2> getParticipationsByUserId(Integer Id) {
+    public List<Participationevent> getParticipationsByUserId(Integer Id) {
         return repopart.findByUserId(Id);
     }
 
@@ -80,19 +79,19 @@ public class Participation2Impl implements Participation2Interface {
 
     @Override
     public void acceptParticipation(Long idPart) throws MessagingException {
-        Participation2 participation2 = repopart.findById(idPart)
+        Participationevent participationevent = repopart.findById(idPart)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid participation Id"));
 
         // Mark the participation as accepted
-        participation2.setStatus(ParticipationStatus.ACCEPTED);
-        repopart.save(participation2); // Save the updated participation
+        participationevent.setStatus(ParticipationStatus.ACCEPTED);
+        repopart.save(participationevent); // Save the updated participation
 
         // Get the associated user with the participation
-        User user = participation2.getUser();
+        User user = participationevent.getUser();
 
         if (user != null) {
             // Obtain the event link from the associated event
-            Event event = participation2.getEvent();
+            Event event = participationevent.getEvent();
             String eventLink = event != null ? event.getLink() : "";
 
             String subject = "Participation Accepted";
@@ -111,23 +110,23 @@ public class Participation2Impl implements Participation2Interface {
 
     @Override
     public void rejectParticipation(Long IdPart) {
-        Participation2 participation2 = repopart.findById(IdPart).orElseThrow(() -> new IllegalArgumentException("Invalid participation Id"));
-        participation2.setStatus(ParticipationStatus.REJECTED); // Mark the participation as rejected
-        repopart.save(participation2); // Save the updated participation
+        Participationevent participationevent = repopart.findById(IdPart).orElseThrow(() -> new IllegalArgumentException("Invalid participation Id"));
+        participationevent.setStatus(ParticipationStatus.REJECTED); // Mark the participation as rejected
+        repopart.save(participationevent); // Save the updated participation
     }
     @Override
-    public Participation2 archiveParticipation(Long IdPart) {
-        Participation2 participation2 = repopart.findById(IdPart)
+    public Participationevent archiveParticipation(Long IdPart) {
+        Participationevent participationevent = repopart.findById(IdPart)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid participation Id"));
-        participation2.setStatus(ParticipationStatus.ARCHIVED);
-        return repopart.save(participation2);
+        participationevent.setStatus(ParticipationStatus.ARCHIVED);
+        return repopart.save(participationevent);
     }
 
 
 
 
     @Override
-    public List<Participation2> getParticipation() {
+    public List<Participationevent> getParticipation() {
         return repopart.findAll();
     }
 

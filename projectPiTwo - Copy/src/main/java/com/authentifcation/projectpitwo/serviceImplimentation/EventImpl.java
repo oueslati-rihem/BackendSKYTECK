@@ -6,18 +6,23 @@ import com.authentifcation.projectpitwo.entities.User;
 import com.authentifcation.projectpitwo.repository.EventRepository;
 import com.authentifcation.projectpitwo.repository.UserRepository;
 import com.authentifcation.projectpitwo.serviceInterface.EventInterface;
+import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class EventImpl implements EventInterface {
     EventRepository repo;
     UserRepository userRepo;
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public void createEvent(Integer Id, Event event) {
@@ -97,6 +102,27 @@ public class EventImpl implements EventInterface {
     @Override
     public long countEvents() {
         return repo.count();
+    }
+
+    @Override
+    public Map<String, Integer> getNumberOfEventsPerMonth() {
+        Map<String, Integer> eventsPerMonth = new HashMap<>();
+        List<Object[]> results = repo.countEventsPerMonth();
+
+        for (Object[] result : results) {
+            int month = (int) result[0];
+            int count = ((Number) result[1]).intValue();
+            String monthName = getMonthName(month); // You need to implement this method
+            eventsPerMonth.put(monthName, count);
+        }
+        return eventsPerMonth;
+    }
+
+    private String getMonthName(int month) {
+        // Implement logic to get month name from month number (1-based)
+        // Example implementation can use java.time.Month or SimpleDateFormat
+        return "Month " + month; // Placeholder implementation
+
     }
 
 

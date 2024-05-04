@@ -5,6 +5,7 @@ import com.authentifcation.projectpitwo.entities.Event;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface EventInterface {
     // Create
@@ -26,4 +27,7 @@ public interface EventInterface {
     List<Event> getEventsByUserId(Integer Id);
     List<Object[]> calculateEventParticipationStatistics();
     long countEvents();
+
+    Map<String, Integer> getNumberOfEventsPerMonth();
+
 }
