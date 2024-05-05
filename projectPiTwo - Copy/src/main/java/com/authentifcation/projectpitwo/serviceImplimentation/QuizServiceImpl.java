@@ -79,6 +79,11 @@ public class QuizServiceImpl implements IQuizService {
         return quizzes;
     }
 
+    @Override
+    public List<Object[]> findTitleAndAverageScore() {
+        return Quizrepo.findTitleAndAverageScore();
+    }
+
     // Méthode utilitaire pour calculer la moyenne d'une liste de nombres
     private double calculateAverage(List<Long> numbers) {
         if (numbers == null || numbers.isEmpty()) {
@@ -90,4 +95,7 @@ public class QuizServiceImpl implements IQuizService {
         }
         return (double) sum / numbers.size();
     }
+
+
+
 }

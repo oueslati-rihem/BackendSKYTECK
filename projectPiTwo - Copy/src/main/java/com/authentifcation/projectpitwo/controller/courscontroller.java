@@ -46,4 +46,9 @@ public class courscontroller {
         courService.affecterQuizAuCours(coursId, quizId);
         return ResponseEntity.ok("Quiz affecté au cours avec succès.");
     }
+
+    @GetMapping("/coursWithQuizCount")
+    public List<Object[]> getCoursWithQuizCount() {
+        return courService.getCoursWithQuizCount();
+    }
 }

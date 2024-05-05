@@ -2,6 +2,7 @@ package com.authentifcation.projectpitwo.repository;
 
 import com.authentifcation.projectpitwo.entities.Cours;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -9,4 +10,6 @@ import java.util.List;
 @Repository
 public interface CoursRepository extends JpaRepository<Cours, Long> {
     List<Cours> findByUser_id(Integer userId);
+    @Query("SELECT c.title AS coursName, COUNT(q) AS quizCount FROM Cours c LEFT JOIN c.Quizs q GROUP BY c")
+    List<Object[]> findCoursWithQuizCount();
 }

@@ -67,4 +67,7 @@ public class CourServiceImpl implements IcourService {
         coursrepo.save(cours);
         quizrepo.save(quiz);
     }
+    public List<Object[]> getCoursWithQuizCount() {
+        return coursrepo.findCoursWithQuizCount();
+    }
 }
