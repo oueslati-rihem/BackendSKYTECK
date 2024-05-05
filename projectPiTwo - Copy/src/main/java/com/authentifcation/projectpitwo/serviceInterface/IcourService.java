@@ -16,5 +16,9 @@ public interface IcourService {
     List<Cours> retrieveAllCoursByUserId(Integer userId);
     public void affecterQuizAuCours(Long coursId, Long quizId);
     List<Object[]> getCoursWithQuizCount();
+    public void addRating(Long coursId, int newRating);
+    Cours findByIdC(Long id);
+
+    public List<Cours> getCoursWithAverageRatingAndTotalRatings();
 
 }

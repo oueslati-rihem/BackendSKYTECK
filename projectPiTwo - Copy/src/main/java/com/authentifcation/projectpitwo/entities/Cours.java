@@ -20,6 +20,8 @@ public class Cours implements Serializable {
     Long idC ;
     String title ;
     String path ;
+     double averageRating;
+     int totalRatings;
     @JoinColumn(name = "user_id")
 
     @ManyToOne

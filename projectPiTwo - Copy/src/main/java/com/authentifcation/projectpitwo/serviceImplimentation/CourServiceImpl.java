@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -68,6 +69,40 @@ public class CourServiceImpl implements IcourService {
         quizrepo.save(quiz);
     }
     public List<Object[]> getCoursWithQuizCount() {
+
         return coursrepo.findCoursWithQuizCount();
     }
+
+    public void addRating(Long coursId, int newRating) {
+        Cours cours = coursrepo.findByIdC(coursId);
+        double sum = cours.getAverageRating() * cours.getTotalRatings();
+        int totalRatings = cours.getTotalRatings();
+        totalRatings++;
+        double averageRating = (sum + newRating) / totalRatings;
+        cours.setTotalRatings(totalRatings);
+        cours.setAverageRating(averageRating);
+        coursrepo.save(cours);
+    }
+
+    @Override
+    public Cours findByIdC(Long id) {
+        return coursrepo.findByIdC(id);
+    }
+
+    public List<Cours> getCoursWithAverageRatingAndTotalRatings() {
+        List<Object[]> results = coursrepo.findAllWithAverageRatingAndTotalRatings();
+        List<Cours> coursList = new ArrayList<>();
+
+        for (Object[] result : results) {
+            Cours cours = (Cours) result[0];
+            Double averageRating = (Double) result[1];
+            int totalRatings= (int) result[2];
+            cours.setAverageRating(averageRating);
+            cours.setTotalRatings(totalRatings);
+            coursList.add(cours);
+        }
+
+        return coursList;
+    }
+
 }

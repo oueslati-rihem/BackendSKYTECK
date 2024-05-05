@@ -10,6 +10,12 @@ import java.util.List;
 @Repository
 public interface CoursRepository extends JpaRepository<Cours, Long> {
     List<Cours> findByUser_id(Integer userId);
+
     @Query("SELECT c.title AS coursName, COUNT(q) AS quizCount FROM Cours c LEFT JOIN c.Quizs q GROUP BY c")
     List<Object[]> findCoursWithQuizCount();
+
+    Cours findByIdC(Long id);
+
+    @Query("SELECT c, AVG(c.averageRating) AS averageRating, COUNT(c) AS totalRatings FROM Cours c LEFT JOIN c.averageRating r GROUP BY c")
+    List<Object[]> findAllWithAverageRatingAndTotalRatings();
 }
