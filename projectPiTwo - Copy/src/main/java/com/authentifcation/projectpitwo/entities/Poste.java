@@ -25,8 +25,9 @@ public class Poste {
     String postName ;
      String description ;
     LocalDate createdDate ;
-     String image;
-    @Enumerated(EnumType.ORDINAL)
+    @Column(columnDefinition = "MEDIUMBLOB")
+    String image;
+    @Enumerated(EnumType.STRING)
     TypePoste typePoste ;
     @ElementCollection
     Map<Reaction,Integer> reactions=new HashMap<>() ;
@@ -34,7 +35,7 @@ public class Poste {
      @ManyToOne
      Room room ;
     @JsonIgnore
-     @OneToMany(mappedBy = "poste")
+     @OneToMany(mappedBy = "poste", cascade = CascadeType.ALL)
     List<Comment> comments ;
 
      //user

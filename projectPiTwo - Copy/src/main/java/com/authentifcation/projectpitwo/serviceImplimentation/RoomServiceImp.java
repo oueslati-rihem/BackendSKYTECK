@@ -23,6 +23,11 @@ public class RoomServiceImp implements IRoomService {
     }
 
     @Override
+    public Room getRoom(Long id) {
+        return roomRepository.findRoomByRoomId(id);
+    }
+
+    @Override
     public Room updateRoom(Room room) {
         return roomRepository.save(room);
     }

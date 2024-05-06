@@ -10,7 +10,7 @@ import java.util.List;
 public interface PosteRepository extends JpaRepository<Poste,Long> {
 
     List<Poste> findAllByRoom(Room room);
-
-
-    //findByUser
+    List<Poste>findByPostName(String postName);
+  /*  @Query("SELECT COUNT(r) FROM Poste p JOIN p.reactions r WHERE p.postId = :postId AND KEY(r) = 'LIKE'")
+    Integer countLikeReactionsByPostId(@Param("postId") Long postId);  //findByUser*/
 }

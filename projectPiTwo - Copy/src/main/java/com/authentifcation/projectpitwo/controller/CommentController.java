@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/comment")
 @AllArgsConstructor
-@CrossOrigin()
 public class CommentController {
     IcommentService icommentService ;
 

@@ -1,5 +1,6 @@
 package com.authentifcation.projectpitwo.serviceInterface;
 
+
 import com.authentifcation.projectpitwo.entities.Room;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -9,6 +10,7 @@ import java.util.List;
 public interface IRoomService {
 
       Room addRoom (Room room);
+      Room getRoom ( Long id);
       Room updateRoom (Room room);
       List<Room> rooms ();
       List<Room>publicRooms();

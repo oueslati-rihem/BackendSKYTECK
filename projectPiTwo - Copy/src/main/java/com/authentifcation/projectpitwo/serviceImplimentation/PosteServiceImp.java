@@ -27,9 +27,9 @@ public class PosteServiceImp implements IPosteService {
         poste.setRoom(room);
 
         // Save the post
-        posteRepository.save(poste);
+        return posteRepository.save(poste);
 
-return poste;    }
+   }
 
     @Override
     public Poste updatePoste(Poste poste) {
@@ -52,5 +52,13 @@ return poste;    }
     public void removePoste(Long numPoste) {
         posteRepository.deleteById(numPoste);
 
+    }
+
+    @Override
+    public Integer reactionsList(Long postId) {
+/*
+        List<Integer> reactions = new ArrayList<>(List.of(0, 0, 0, 0));
+*/
+           return    0 ;
     }
 }

@@ -42,7 +42,7 @@ public class WebSecurityConfiguration  {
      public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
          return http.csrf().disable()
                  .authorizeHttpRequests()
-                 .requestMatchers("/authenticate", "/registerNewUser","/updateStudents","/forgotPassword","/getUsers","/upload","/image","/updatePassword","/activate/**","/unban/**" , "/activate-account","/userRoleStatistics" ,"/bannedUserStatistics" ,"/userDetail").permitAll()
+                 .requestMatchers("**","/authenticate", "/registerNewUser","/updateStudents","/forgotPassword","/getUsers","/upload","/image","/updatePassword","/activate/**","/unban/**" , "/activate-account","/userRoleStatistics" ,"/bannedUserStatistics" ,"/userDetail","/room/*","/room/saveRoom/**").permitAll()
                  .and()
                  .authorizeHttpRequests().requestMatchers(HttpHeaders.ALLOW).permitAll()
                  .anyRequest()

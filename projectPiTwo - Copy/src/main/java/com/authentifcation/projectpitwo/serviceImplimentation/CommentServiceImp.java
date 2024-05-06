@@ -2,7 +2,6 @@ package com.authentifcation.projectpitwo.serviceImplimentation;
 
 
 import com.authentifcation.projectpitwo.entities.Comment;
-
 import com.authentifcation.projectpitwo.entities.Poste;
 import com.authentifcation.projectpitwo.repository.CommentRepository;
 import com.authentifcation.projectpitwo.repository.PosteRepository;

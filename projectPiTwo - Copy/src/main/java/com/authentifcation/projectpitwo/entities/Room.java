@@ -1,10 +1,11 @@
 package com.authentifcation.projectpitwo.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Room {
+public class Room  implements Serializable {
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
     Long roomId ;
@@ -30,14 +31,15 @@ public class Room {
     @Enumerated(EnumType.ORDINAL)
     private TypeRoom typeRoom ;
     private Long capacity ;
-    @JsonIgnore
-    @OneToMany(mappedBy = "room")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     List<Poste> posts ;
 
     //user
     @ManyToOne
     @JoinColumn(name = "creator_id")
     private User creator;
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 
     @ManyToMany
     @JoinTable(name = "user_room",
