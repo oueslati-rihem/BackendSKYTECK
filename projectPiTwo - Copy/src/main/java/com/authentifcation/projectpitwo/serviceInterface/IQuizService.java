@@ -13,5 +13,7 @@ public interface IQuizService {
     void deleteQuiz(Long id);
     List<Quiz> retrieveAllQuizByCourID(Long CourId);
     void  addQuestionToQuiz(Long quizId, long questionid);
+    List<Quiz> calculateQuizAverages();
+    List<Object[]> findTitleAndAverageScore();
 
 }

@@ -50,5 +50,14 @@ public class QuizController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @GetMapping("/moyennestatistics")
+    public ResponseEntity<?> getQuizStatistics() {
+        List<Object[]> quizStatistics = quizservice.findTitleAndAverageScore();
+        return ResponseEntity.ok(quizStatistics);
+    }
+    @GetMapping("/calculateAverages")
+    public List<Quiz> calculateQuizAverages() {
+        return quizservice.calculateQuizAverages();
+    }
 
 }

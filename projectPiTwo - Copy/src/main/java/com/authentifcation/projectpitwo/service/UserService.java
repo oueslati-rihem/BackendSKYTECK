@@ -98,6 +98,10 @@ public class UserService implements UserInterface {
         userDao.save(adminUser);
 
       /* User user = new User();
+
+/*
+       User user = new User();
+
         user.setId(3);
         user.setUserName("rihem123");
         user.setUserPassword(getEncodedPassword("rihem@123"));

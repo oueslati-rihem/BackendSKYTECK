@@ -3,6 +3,7 @@ package com.authentifcation.projectpitwo.controller;
 import com.authentifcation.projectpitwo.entities.Cours;
 import com.authentifcation.projectpitwo.serviceInterface.IcourService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +46,26 @@ public class courscontroller {
     public ResponseEntity<String> affecterQuizAuCours(@PathVariable Long coursId, @PathVariable Long quizId) {
         courService.affecterQuizAuCours(coursId, quizId);
         return ResponseEntity.ok("Quiz affecté au cours avec succès.");
+    }
+
+    @GetMapping("/coursWithQuizCount")
+    public List<Object[]> getCoursWithQuizCount() {
+        return courService.getCoursWithQuizCount();
+    }
+    @PostMapping("/{coursId}/{rating}")
+    public ResponseEntity<String> addRating(@PathVariable Long coursId, @PathVariable int rating) {
+        courService.addRating(coursId, rating);
+        return ResponseEntity.ok("Rating added successfully");
+    }
+
+    @GetMapping("/{coursId}/averageRating")
+    public ResponseEntity<Double> getAverageRating(@PathVariable Long coursId) {
+        Cours cours = courService.findByIdC(coursId);
+        return ResponseEntity.ok(cours.getAverageRating());
+    }
+    @GetMapping("/averageRatingAndTotalRatings")
+    public ResponseEntity<List<Cours>> getCoursWithAverageRatingAndTotalRatings() {
+        List<Cours> coursList = courService.getCoursWithAverageRatingAndTotalRatings();
+        return new ResponseEntity<>(coursList, HttpStatus.OK);
     }
 }

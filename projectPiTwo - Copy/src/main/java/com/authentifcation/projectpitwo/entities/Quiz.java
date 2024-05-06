@@ -19,6 +19,7 @@ public class Quiz implements Serializable {
 
     Long idQ;
     String title ;
+    Double moyenneScores;
     @ManyToOne
     @JoinColumn(name = "Cours_id")
     @JsonIgnore
